@@ -4,6 +4,8 @@
 {var $canEdit = $thisUser && $club->canBeModifiedBy($thisUser)}
 {block title}{$club->getName()}{/block}
 
+{block appbar_username}<span class="appbar-username mobileonly">{$club->getURL()|substr:1}</span>{/block}
+
 {block appbar_extra}
 <div class="mobileonly" id="group_appbar_extra">
     <button class="appbar-extra-btn ui_actions_menu_wrap" id="groupAppbarMoreBtn" aria-label="More actions" onclick='{="uiActionsMenu.toggle(this, null, {menuId: \"profile_actions_tooltip\"});"|noescape}'>
@@ -731,8 +733,8 @@
 				<div class="page_block info_block nomobile">
 					<div class="page_top">
 						<h2 class="page_name">{$club->getName()}
-							<a class="page_verified" n:if="$club->isVerified()" href="/verify"></a>
-						</h2>
+												<a class="page_verified" n:if="$club->isVerified()" href="/verify" title="Верифицированное сообщество&#10;&#10;Это официальное сообщество известной персоны или организации."></a>
+											</h2>
 					</div>
 					{if $pinnedPost}
 						{var $infoTabs = [

@@ -1,0 +1,187 @@
+/* ============ VK2020 v5: видео-страница как в ВК ============ */
+/* Двухколоночная: видео+инфо слева, комментарии справа;
+   под видео: название → лайк/репост → автор → описание */
+
+.page_block .video_block_layout {
+    padding-top: 14px !important;
+}
+
+/* Обёртка: grid — левая колонка (видео+инфо), правая (комменты) */
+/* Вложенный порядок: .video_block_layout, .video_info, .video_comments — siblings внутри .page_block.
+   Обернуть нельзя (шаблон), поэтому grid на .page_block с нумерацией по порядку. */
+.page_block:has(> .video_block_layout) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    grid-template-areas:
+        "header header"
+        "video  comments"
+        "info   comments";
+    gap: 0 16px;
+    align-items: start;
+}
+.page_block:has(> .video_block_layout) > *:nth-child(1) { grid-area: header; }
+.page_block:has(> .video_block_layout) > .video_block_layout { grid-area: video; }
+.page_block:has(> .video_block_layout) > .video_info { grid-area: info; }
+.page_block:has(> .video_block_layout) > .video_comments { grid-area: comments; max-height: calc(100vh - 140px); overflow-y: auto; padding-top: 14px; }
+
+/* Мобильная версия: одна колонка */
+@media (max-width: 960px) {
+    .page_block:has(> .video_block_layout) {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "header"
+            "video"
+            "info"
+            "comments";
+    }
+    .page_block:has(> .video_block_layout) > .video_comments {
+        max-height: none;
+    }
+}
+
+/* Инфо-блок под видео: отступы как ВК */
+.video_info {
+    padding: 12px 4px 4px;
+}
+.video_info_title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 8px;
+}
+.dark-mode .video_info_title { color: #fff; }
+.video_info_actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.video_like_wrap .action_label,
+.video_share_button .action_label {
+    display: none !important;
+}
+.video_like_wrap .action_icon,
+.video_share_button .action_icon {
+    width: 26px !important;
+    height: 26px !important;
+    mask-size: 26px 26px !important;
+    -webkit-mask-size: 26px 26px !important;
+    background-size: 26px 26px !important;
+}
+.video_info_author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.video_info_author_name a {
+    font-weight: 600;
+    font-size: 14px;
+    color: #000 !important;
+}
+.dark-mode .video_info_author_name a { color: #fff !important; }
+.video_info_author_date {
+    font-size: 12.5px;
+    color: #99a2ad;
+}
+.video_info_description {
+    font-size: 13.5px;
+    color: #3c3c3c;
+    line-height: 1.45;
+    padding-top: 4px;
+}
+.dark-mode .video_info_description { color: #e1e3e6; }
+
+/* ============ ПОПАПЫ: заголовок СЛЕВА, крестик СПРАВА ============ */
+.ovk-diag-head {
+    text-align: left !important;
+    padding: 0 48px 0 16px !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-start;
+    height: 48px;
+    line-height: 48px;
+}
+.dark-mode .ovk-diag-head {
+    background-color: #19191a !important;
+    color: #ffffff !important;
+}
+/* крестик — прижат вправо поверх заголовка */
+.ovk-diag-head-close {
+    position: absolute !important;
+    right: 12px;
+    top: 0;
+    height: 48px;
+    line-height: 48px;
+    color: #99a2ad;
+}
+/* Текст в теле попапа — слева */
+.ovk-diag-body {
+    text-align: left;
+}
+/* Кнопка закрытия — справа поверх */
+.ovk-diag-head-close {
+    color: #99a2ad;
+}
+
+/* Попап видео — НА ВЕСЬ ЭКРАН, кнопки БЕЗ заливок */
+.ovk-diag:has(.bsdn),
+.ovk-diag:has(video[data-src]),
+.ovk-diag:has(.vk2020-videopopup) {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    position: fixed !important;
+}
+.ovk-diag:has(.bsdn) .ovk-diag-body,
+.ovk-diag:has(video[data-src]) .ovk-diag-body {
+    padding: 0 !important;
+    height: calc(100vh - 48px);
+    display: flex;
+    flex-direction: column;
+}
+/* видео занимает всё тело попапа */
+.ovk-diag:has(.bsdn) video,
+.ovk-diag:has(video[data-src]) video,
+.ovk-diag:has(.bsdn) .bsdn_video_player,
+.ovk-diag:has(video[data-src]) .bsdn_video_player {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: calc(100vh - 48px) !important;
+    aspect-ratio: auto !important;
+    border-radius: 0 !important;
+    background: #000;
+    flex: 1;
+}
+/* bsdn-кнопки: без заливок, только иконки */
+.bsdn_playButton,
+.bsdn_fullScreenButton,
+.bsdn_repeatButton,
+.bsdn_volumeButton {
+    background: none !important;
+    background-color: transparent !important;
+    opacity: 0.9;
+    transition: opacity 0.12s;
+}
+.bsdn_playButton:hover,
+.bsdn_fullScreenButton:hover,
+.bsdn_repeatButton:hover,
+.bsdn_volumeButton:hover {
+    opacity: 1;
+    background-color: transparent !important;
+}
+/* полоса контролов — прозрачный градиент вместо тёмной заливки */
+.bsdn_video_player .bsdn_controlsBar,
+.bsdn_controlsBar {
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.55)) !important;
+    border-top: 0 !important;
+}

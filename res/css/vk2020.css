@@ -1,0 +1,584 @@
+/*
+ * VK2020 themepack — vk.ru 2020-н.в. restyle layer v2.
+ * Official VK SVG icons from @vkontakte/icons (vkcom.github.io/icons).
+ * Header/sidebar icons: #71aaeb (like current vk.ru), accent: #0077FF.
+ */
+
+/* ============ 1. TOKENS: vk.ru palette (насыщенные) ============ */
+body {
+    --layout-width: 960px;
+    --header-height: 48px;
+    --module-border-radius: 8px;
+    --button-border-radius: 8px;
+    --tooltip-border-radius: 8px;
+
+    /* Backgrounds */
+    --body-background-color: #edeef0;
+    --module-background-color: #ffffff;
+    --module-background-color--secondary: #f5f6f8;
+    --module-header-background-color: #ffffff;
+    --header-background-color: #ffffff;
+    --header-background-color--hover: rgba(0, 0, 0, 0.04);
+    --header-background-color--active: rgba(0, 0, 0, 0.08);
+    --button-background-color: #f0f2f5;
+    --button-background-color--hover: #e5ebf0;
+    --button-background-color--active: #dbe0e6;
+    --button-background-color--light: #f5f6f8;
+
+    /* VK UI icon blue (как иконки на vk.ru сейчас) */
+    --icon-color: #71aaeb;
+    --icon-color--hover: #0077ff;
+
+    /* Borders */
+    --border-color: #e7e8ec;
+    --border-color-2: #dce0e6;
+    --border-color-3: #d4d9e0;
+    --border-color-4: #c4cad3;
+
+    /* Text */
+    --text-color: #000000;
+    --header-text-color: #000000;
+    --muted-text-color: #99a2ad;
+    --muted-text-color-2: #626d7a;
+    --muted-text-color-3: #818c99;
+    --heading-color: #000000;
+    --link-color: #3c3c3c;
+    --link-color-2: #626d7a;
+
+    /* Sidebar */
+    --sidebar-color--hover: #ebedf0;
+    --sidebar-text-color: #2a2a2a;
+    --sidebar-count-color: #f0f2f5;
+    --sidebar-count-color--hover: #e5ebf0;
+    --sidebar-count-text-color: #818c99;
+
+    /* Search: широкий серый как vk.ru */
+    --search-color: #f0f2f5;
+    --search-color--active: #ffffff;
+    --search-text-color: #000000;
+    --search-text-color--active: #000000;
+    --search-text-color--placeholder: #818c99;
+
+    /* Accent: насыщенный VK blue (только для кнопок/фонов, НЕ текста) */
+    --accent-color: #0077ff;
+    --accent-color--hover: #0a6fe8;
+    --accent-color--active: #0067d5;
+    --accent-color-rgb: 0, 119, 255;
+    --accent-text-color: #ffffff;
+    --accent-color-2: #0077ff;
+    --accent-color-3: #0077ff;
+    --accent-color-4: #0067d5;
+    --accent-color-5: #0077ff;
+    --accent-color-6: #0a6fe8;
+
+    /* Ссылки-текст: серые (светлая) — синего текста нет нигде */
+    --link-color: #3c3c3c;
+    --link-color-2: #626d7a;
+
+    /* Post actions / meta */
+    --post-action-color: #626d7a;
+    --post-action-active-color: #ff3347;
+    --post-meta-color: #818c99;
+    --menu-divider-color: #e7e8ec;
+    --tab-border-color: #dce0e6;
+    --tab-text-color: #818c99;
+    --dropdown-border-color: #d4d9e0;
+    --dropdown-hover-color: #f0f2f5;
+
+    /* Misc */
+    --message-warning-background: #fff3f0;
+    --message-warning-border: #ff3347;
+    --quote-border-color: #e7e8ec;
+    --search-placeholder-color: #818c99;
+    --profile-button-border-color: #d4d9e0;
+    --elevator-bg-color: #ebedf0;
+    --elevator-text-color: #818c99;
+    --to-top-opacity: 0;
+    --to-top-width: 114px;
+}
+
+.page_body,
+.messenger-app,
+.crp-list {
+    font-size: 13px;
+}
+
+/* ============ 2. КНОПКИ ТОЧЬ-ТОЧЬ КАК ВК ============ */
+.button,
+input[class="button"],
+.profile_link {
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 18px;
+    padding: 9px 16px;
+    min-height: 32px;
+    transition: background-color 0.1s ease, opacity 0.1s ease;
+}
+
+/* Серая вторичная кнопка ВК */
+.button.button_gray,
+.button:not(.button_blue):not(.button_green):not(.button_yellow):not(.profile_more_btn) {
+    background-color: #f0f2f5;
+    color: #2a2a2a;
+}
+.button.button_gray:hover {
+    background-color: #e5ebf0;
+    color: #2a2a2a;
+}
+.button:not(.button_blue):not(.button_green):not(.button_yellow):not(.profile_more_btn):active {
+    background-color: #dbe0e6;
+}
+
+/* Главная синяя кнопка */
+.button.button_blue,
+.button {
+    background-color: #0077ff;
+    color: #ffffff;
+    font-weight: 500;
+}
+.button:hover,
+.button.button_blue:hover {
+    background-color: #0a6fe8;
+    color: #ffffff;
+}
+.button:active,
+.button.button_blue:active {
+    background-color: #0067d5;
+}
+
+/* Инпуты */
+input[type="text"],
+input[type="search"],
+input[type="password"],
+input[type="email"],
+textarea,
+select,
+.big_text {
+    border-radius: 8px !important;
+    border: 1px solid #dce0e6;
+    font-size: 13.5px;
+    padding: 7px 10px;
+    transition: border-color 0.1s;
+}
+input[type="text"]:focus,
+input[type="search"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #0077ff !important;
+    outline: none;
+}
+
+/* ============ 3. ХЕДЕР: лого + широкий поиск + иконки #71aaeb ============ */
+.page_header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Лого VK */
+.home_button .home_button_bg {
+    width: 30px;
+    height: 30px;
+    margin: 9px 8px;
+    background: url("../icons/svg/logo_vk_color_28.svg") center/contain no-repeat;
+}
+
+.ovkhat .home_button .home_button_bg {
+    background-position: center;
+    width: 30px;
+    height: 30px;
+    margin-top: 9px;
+}
+
+/* Поиск: шире (300px), крупнее (14px), высота 32px как vk.ru */
+.home_search {
+    width: 300px;
+}
+.page_header #search_box input[type="search"] {
+    background: var(--search-color) url("../icons/svg/search_outline_24.svg") no-repeat;
+    background-position: left 8px center;
+    background-size: 18px 18px;
+    border-radius: 16px;
+    height: 32px;
+    margin: 8px 0;
+    font-size: 14px;
+    line-height: 18px;
+    transition: background-color 0.15s, box-shadow 0.15s;
+}
+.page_header #search_box input[type="search"]:focus {
+    background-color: #ffffff;
+    box-shadow: 0 0 0 1.5px #0077ff inset;
+}
+.home_search input[type~="search"]::placeholder {
+    color: var(--search-text-color--placeholder);
+}
+
+/* ХЕДЕР-КНОПКИ: ОРИГИНАЛ vkify16 — спрайт head_icons.png, размеры из базы.
+   Ничего не перекрываем: база stylesheet.css уже рисует все иконки и ховеры. */
+
+/* Плеер в шапке: оригинальный спрайт — не трогаем */
+.end_navigation #userMenuArrow {
+    background: none;
+    background-color: var(--icon-color);
+    -webkit-mask: url("../icons/svg/chevron_down_24.svg") center/8px no-repeat;
+    mask: url("../icons/svg/chevron_down_24.svg") center/8px no-repeat;
+    width: 12px;
+    height: 12px;
+    margin: 18px 6px;
+    display: inline-block;
+    opacity: 1;
+}
+
+/* ============ 4. БЕЙДЖ УВЕДОМЛЕНИЙ: красный как ВК ============ */
+.top_notify_count {
+    background-color: #ff3347;
+    border: 2px solid #ffffff;
+    border-radius: 8px;
+    font-size: 9.5px;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* ============ 5. САЙДБАР: иконки 20px #71aaeb как vk.ru ============ */
+.sidebar_inner .link .link_icon {
+    background: none;
+    background-color: var(--icon-color);
+    -webkit-mask: url("../icons/svg/user_outline_28.svg") center/contain no-repeat;
+    mask: url("../icons/svg/user_outline_28.svg") center/contain no-repeat;
+    height: 20px;
+    width: 20px;
+    margin-right: 8px;
+    opacity: 1;
+    vertical-align: middle;
+    display: inline-block;
+    transition: background-color 0.12s;
+}
+.sidebar_inner .link:hover .link_icon {
+    background-color: var(--icon-color--hover);
+}
+.sidebar_inner .link.my_messages .link_icon {
+    -webkit-mask-image: url("../icons/svg/message_outline_28.svg");
+    mask-image: url("../icons/svg/message_outline_28.svg");
+}
+.sidebar_inner .link.my_page .link_icon {
+    -webkit-mask-image: url("../icons/svg/user_outline_28.svg");
+    mask-image: url("../icons/svg/user_outline_28.svg");
+}
+.sidebar_inner .link.my_feed .link_icon {
+    -webkit-mask-image: url("../icons/svg/newsfeed_outline_28.svg");
+    mask-image: url("../icons/svg/newsfeed_outline_28.svg");
+}
+.sidebar_inner .link.my_friends .link_icon {
+    -webkit-mask-image: url("../icons/svg/users_3_outline_28.svg");
+    mask-image: url("../icons/svg/users_3_outline_28.svg");
+}
+.sidebar_inner .link.my_photos .link_icon {
+    -webkit-mask-image: url("../icons/svg/picture_outline_28.svg");
+    mask-image: url("../icons/svg/picture_outline_28.svg");
+}
+.sidebar_inner .link.my_videos .link_icon {
+    -webkit-mask-image: url("../icons/svg/video_outline_28.svg");
+    mask-image: url("../icons/svg/video_outline_28.svg");
+}
+.sidebar_inner .link.my_audios .link_icon {
+    -webkit-mask-image: url("../icons/svg/music_outline_28.svg");
+    mask-image: url("../icons/svg/music_outline_28.svg");
+}
+.sidebar_inner .link.my_apps .link_icon {
+    -webkit-mask-image: url("../icons/svg/services_outline_28.svg");
+    mask-image: url("../icons/svg/services_outline_28.svg");
+}
+.sidebar_inner .link.my_notes .link_icon {
+    -webkit-mask-image: url("../icons/svg/article_outline_28.svg");
+    mask-image: url("../icons/svg/article_outline_28.svg");
+}
+.sidebar_inner .group_link .link_icon,
+.sidebar_inner .link.my_groups .link_icon {
+    -webkit-mask-image: url("../icons/svg/users_outline_28.svg");
+    mask-image: url("../icons/svg/users_outline_28.svg");
+}
+.sidebar_inner .link[href="/donate"] .link_icon {
+    -webkit-mask-image: url("../icons/svg/gift_outline_28.svg");
+    mask-image: url("../icons/svg/gift_outline_28.svg");
+}
+.sidebar_inner .link.my_docs .link_icon {
+    -webkit-mask-image: url("../icons/svg/document_outline_28.svg");
+    mask-image: url("../icons/svg/document_outline_28.svg");
+}
+.sidebar_inner .link.my_fave .link_icon {
+    -webkit-mask-image: url("../icons/svg/bookmark_outline_28.svg");
+    mask-image: url("../icons/svg/bookmark_outline_28.svg");
+}
+.sidebar_inner .link.my_helpdesk .link_icon {
+    -webkit-mask-image: url("../icons/svg/help_outline_28.svg");
+    mask-image: url("../icons/svg/help_outline_28.svg");
+}
+.sidebar_inner .link.my_settings .link_icon {
+    -webkit-mask-image: url("../icons/svg/settings_outline_28.svg");
+    mask-image: url("../icons/svg/settings_outline_28.svg");
+}
+.sidebar_inner .link.reports .link_icon {
+    -webkit-mask-image: url("../icons/svg/warning_triangle_outline_28.svg");
+    mask-image: url("../icons/svg/warning_triangle_outline_28.svg");
+}
+.sidebar_inner .link.nospam .link_icon {
+    -webkit-mask-image: url("../icons/svg/mute_cross_28.svg");
+    mask-image: url("../icons/svg/mute_cross_28.svg");
+}
+.sidebar_inner .link.my_admin .link_icon {
+    -webkit-mask-image: url("../icons/svg/shield_keyhole_outline_56.svg");
+    mask-image: url("../icons/svg/shield_keyhole_outline_56.svg");
+}
+
+/* ============ 6. ПОСТЫ: лайк/коммент/шэр иконки ============ */
+.action_icon {
+    background: none;
+    background-color: var(--post-action-color);
+    -webkit-mask: url("../icons/svg/like_outline_24.svg") center/16px 16px no-repeat;
+    mask: url("../icons/svg/like_outline_24.svg") center/16px 16px no-repeat;
+    width: 16px;
+    height: 16px;
+    margin: 2px 0 1px;
+    float: left;
+    opacity: 0.8;
+}
+a.action_button.my_like .action_icon,
+.my_like .action_icon {
+    background-color: #0077ff;
+    -webkit-mask-image: url("../icons/svg/like_24.svg");
+    mask-image: url("../icons/svg/like_24.svg");
+    opacity: 1;
+}
+.post_share .action_icon {
+    -webkit-mask-image: url("../icons/svg/share_outline_24.svg");
+    mask-image: url("../icons/svg/share_outline_24.svg");
+}
+.post_reply .action_icon,
+.reply .action_icon {
+    -webkit-mask-image: url("../icons/svg/comment_outline_24.svg");
+    mask-image: url("../icons/svg/comment_outline_24.svg");
+}
+.reply .action_icon {
+    width: 14px;
+    height: 14px;
+    -webkit-mask-size: 14px 14px;
+    mask-size: 14px 14px;
+    background-position: center;
+}
+.reply .reply_action {
+    background: none;
+    background-color: var(--post-action-color);
+    -webkit-mask: url("../icons/svg/more_horizontal_24.svg") center/13px no-repeat;
+    mask: url("../icons/svg/more_horizontal_24.svg") center/13px no-repeat;
+    opacity: 0;
+}
+.reply .reply_action.reply_edit_action {
+    -webkit-mask-image: url("../icons/svg/pen_outline_24.svg");
+    mask-image: url("../icons/svg/pen_outline_24.svg");
+}
+.reply:hover .reply_action {
+    opacity: 0.7;
+}
+
+/* ============ 7. ГАЛОЧКА ВЕРИФИКАЦИИ ВК-СТИЛЬ ============ */
+/* Официальная check_circle, синяя #3f8ae0 — как на vk.ru */
+.page_verified {
+    background: none;
+    background-color: #3f8ae0;
+    -webkit-mask: url("../icons/svg/check_circle_16.svg") center/contain no-repeat;
+    mask: url("../icons/svg/check_circle_16.svg") center/contain no-repeat;
+    width: 16px;
+    height: 16px;
+    margin-left: 4px;
+    vertical-align: -2px;
+    display: inline-block;
+    cursor: pointer;
+}
+.post .page_verified,
+.reply .page_verified {
+    width: 14px;
+    height: 14px;
+    -webkit-mask-size: 14px 14px;
+    mask-size: 14px 14px;
+}
+
+/* VK-style tooltip для галочки */
+.tippy-box[data-theme~="vk2020-verify"] {
+    background: rgba(0, 0, 0, 0.72);
+    color: #fff;
+    border-radius: 10px;
+    font-size: 12.5px;
+    padding: 8px 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.24);
+}
+.tippy-box[data-theme~="vk2020-verify"] .tippy-arrow {
+    color: rgba(0, 0, 0, 0.72);
+}
+
+/* ============ 8. АТАЧ-МЕНЮ ============ */
+.post-attach-menu__icon,
+.post-upload::before,
+.post-has-poll::before,
+.post-has-note::before,
+.attachment_note::before,
+.post-has-geo.appended-geo::before,
+.post-geo::before {
+    background: none;
+    background-color: var(--icon-color);
+    -webkit-mask: url("../icons/svg/picture_outline_24.svg") center/22px 22px no-repeat;
+    mask: url("../icons/svg/picture_outline_24.svg") center/22px 22px no-repeat;
+    opacity: 0.9;
+}
+.attach_photo .post-attach-menu__icon {
+    -webkit-mask-image: url("../icons/svg/picture_outline_24.svg");
+    mask-image: url("../icons/svg/picture_outline_24.svg");
+}
+.attach_video .post-attach-menu__icon {
+    -webkit-mask-image: url("../icons/svg/video_outline_24.svg");
+    mask-image: url("../icons/svg/video_outline_24.svg");
+}
+.attach_audio .post-attach-menu__icon {
+    -webkit-mask-image: url("../icons/svg/music_outline_24.svg");
+    mask-image: url("../icons/svg/music_outline_24.svg");
+}
+.attach_document .post-attach-menu__icon {
+    -webkit-mask-image: url("../icons/svg/document_outline_24.svg");
+    mask-image: url("../icons/svg/document_outline_24.svg");
+}
+.attach_note .post-attach-menu__icon,
+.post-has-note::before,
+.attachment_note::before {
+    -webkit-mask-image: url("../icons/svg/article_outline_24.svg");
+    mask-image: url("../icons/svg/article_outline_24.svg");
+}
+.attach_poll .post-attach-menu__icon,
+.post-has-poll::before {
+    -webkit-mask-image: url("../icons/svg/poll_outline_24.svg");
+    mask-image: url("../icons/svg/poll_outline_24.svg");
+}
+.attach_graffiti .post-attach-menu__icon {
+    -webkit-mask-image: url("../icons/svg/picture_outline_28.svg");
+    mask-image: url("../icons/svg/picture_outline_28.svg");
+}
+.post-geo::before,
+.post-has-geo.appended-geo::before {
+    -webkit-mask-image: url("../icons/svg/location_outline_24.svg");
+    mask-image: url("../icons/svg/location_outline_24.svg");
+}
+
+/* ============ 9. ПРОФИЛЬ КАК vk.ru/id1 ============ */
+/* Аватарки круглые */
+.avatar,
+.post-avatar,
+.reply_img {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Имя профиля: тёмно-серое (светлая), белое (тёмная) */
+.page_name {
+    font-weight: 500;
+    color: #000;
+}
+.page_name a {
+    color: #000;
+    font-weight: 500;
+}
+.dark-mode .page_name,
+.dark-mode .page_name a {
+    color: #ffffff;
+}
+
+/* Кнопки действий на странице (Написать/Добавить): ВК-стиль */
+.page_actions .button,
+.profile_action_buttons .button {
+    background-color: #f0f2f5;
+    color: #2a2a2a;
+    font-weight: 500;
+    border-radius: 8px;
+}
+.page_actions .button:hover,
+.profile_action_buttons .button:hover {
+    background-color: #e5ebf0;
+}
+
+/* Аватар + статус онлайн */
+.online.leaf {
+    background-color: #4bb34b;
+}
+
+/* ============ 10. ПРОЧее ============ */
+/* Тултипы ВК-стиль: чёрные, круглые */
+.tippy-box {
+    border-radius: 8px !important;
+    font-size: 12.5px;
+}
+.tippy-box[data-theme~="light"] {
+    border-radius: 10px !important;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Карточки с мягкой тенью как vk.ru */
+.page_block {
+    box-shadow: none;
+    border: 1px solid var(--border-color);
+}
+
+/* Выделение текста */
+::selection {
+    background: rgba(0, 119, 255, 0.25);
+}
+
+/* Скроллбар как ВК */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: #c4cad3;
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #99a2ad;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Наверх */
+.toTop nobr {
+    background: none;
+    color: var(--elevator-text-color);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0;
+}
+.toTop nobr::before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-color: var(--elevator-text-color);
+    -webkit-mask: url("../icons/svg/arrow_up_24.svg") center/contain no-repeat;
+    mask: url("../icons/svg/arrow_up_24.svg") center/contain no-repeat;
+}
+
+/* Иконки тикетов */
+.tickets_list .info::before {
+    background: none;
+    background-color: var(--muted-text-color);
+    -webkit-mask: url("../icons/svg/info_24.svg") center/24px no-repeat;
+    mask: url("../icons/svg/info_24.svg") center/24px no-repeat;
+}
+.addIcon {
+    background: none;
+    background-color: var(--muted-text-color);
+    -webkit-mask: url("../icons/svg/add_outline_24.svg") center/13px no-repeat;
+    mask: url("../icons/svg/add_outline_24.svg") center/13px no-repeat;
+}
+
+.end_navigation a {
+    font-weight: 500;
+}

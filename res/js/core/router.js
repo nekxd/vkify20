@@ -374,7 +374,7 @@ window.router = new class Router {
 
             const parsedContent = new DOMParser().parseFromString(await response.text(), 'text/html');
             const nextBody = parsedContent.querySelector('body');
-            if (!nextBody || nextBody.getAttribute('data-themepack') !== 'vkify16') {
+            if (!nextBody || nextBody.getAttribute('data-themepack') !== 'vk2020') {
                 return { fullLoad: true, url: response.redirected ? response.url : resolvedUrl.href };
             }
 

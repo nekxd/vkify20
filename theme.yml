@@ -1,14 +1,14 @@
-id: vkify16
-version: "3.3.6.1"
+id: vk2020
+version: "1.0.0.0"
 openvk_version: 0
 enabled: 1
 override_templates: true
-inherit_master: true
+inherits_master: false
 metadata:
   name:
-    _: "VKify16 (unstable)"
-    en: "VKify16 (unstable)"
-    ru: "VKify16 (нестабильна)"
-    uk: "VKify16 (нестабільна)"
-  author: "VKify, VKify coRE: koke228 (ovk.to/koke228); Стили VK 2016: thejenja (thejenja.github.io); VKify16: ayato"
-  description: "ВК 2016-17 гг."
+    _: "VKify20 (unstable)"
+    en: "VKify20 (unstable)"
+    ru: "VKify20 (нестабильна)"
+    uk: "VKify20 (нестабільна)"
+  author: "VKify, VKify coRE: koke228 (openvk.xyz/koke228); Стили VK 2016: thejenja (thejenja.github.io); VKify16: ayato VKify20: Yandhiev (nekxd.fun)"
+  description: "ВК 2020-23 гг."

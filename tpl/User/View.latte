@@ -6,7 +6,9 @@
 
 {var $transparentAppbar = true}
 
-{block title}{$user->getCanonicalName()}{/block} 
+{block title}{$user->getCanonicalName()}{/block}
+
+{block appbar_username}<span class="appbar-username mobileonly">{$user->getURL(true)}</span>{/block}
 
 {block headIncludes}
     {if $user->getPrivacyPermission('page.read', $thisUser ?? NULL)}
@@ -560,7 +562,7 @@
 							<a class="module_header" href="/gifts{$user->getId()}">
 								<h3 class="header_top clear_fix">
 									<span class="header_label fl_l">{_gifts}</span>
-									<span class="header_count fl_l" id="gifts_module_count">{$giftCount}</span>
+									<span class="header_count fl_l" id="gifts_module_count">{$user->getGiftCount()}</span>
 								</h3>
 							</a>
 							<div class="module_body clear_fix">
@@ -792,7 +794,7 @@
 										{/if}
 									</div>
 								</div>
-								<h2 class="page_name">{$user->getFullName()} <a class="page_verified" n:if="$user->isVerified()" href="/verify"></a></h2>
+								<h2 class="page_name">{$user->getFullName()} <a class="page_verified" n:if="$user->isVerified()" href="/verify" title="Верифицированная страница&#10;&#10;Страница «{$user->getFullName()}» подтверждена." data-verified-name="{$user->getFullName()}"></a></h2>
 
 								{if !$audioStatus}
 									{if $user->getStatus()}

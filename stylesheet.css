@@ -4215,7 +4215,7 @@ a.poll-retract-vote,
 .tickets_list .info::before {
     width: 32px;
     height: 32px;
-    background: url(/themepack/vkify16/3.3.1.6/resource/icons/status_icons.png) no-repeat 0 0;
+    background: url(/themepack/vk2020/5.0.8.0/resource/icons/status_icons.png) no-repeat 0 0;
     content: "";
     position: absolute;
     background-position: left 0;

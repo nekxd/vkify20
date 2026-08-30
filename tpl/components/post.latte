@@ -19,7 +19,6 @@
 {var $compact = $compact ?? false}
 {var $postPage = $postPage ?? false}
 {var $club = $club ?? NULL}
-{var $is2018 = ($_COOKIE['vkify16_2018mode'] ?? '0') === '1'}
 {var $onlinePlatform = (!$post->isPostedOnBehalfOfGroup() && $author->isOnline()) ? $author->getOnlinePlatform(true) : null}
 {var $suggestion = $suggestion ?? false}
 {var $commentSection = $commentSection ?? true}
@@ -185,18 +184,15 @@
                     <span class="action_count">{if $likesCount > 0}{$likesCount}{/if}</span>
                 </a>
             {/if}
-            <a n:if="!($forceNoCommentsLink ?? false) && $commentSection == true && $is2018" id="comments{$post->getPrettyId()}" class="post_reply action_button" href="javascript:window.toggle_comment_textarea({$commentTextAreaId})">
+            <a n:if="!($forceNoCommentsLink ?? false) && $commentSection == true" id="comments{$post->getPrettyId()}" class="post_reply action_button" href="javascript:window.toggle_comment_textarea({$commentTextAreaId})" title="{tr('reply')}">
                 <i class="action_icon"></i>
-                <span class="action_label">{tr('reply')}</span>
                 <span class="action_count" id="commentsCount{$post->getPrettyId()}">{if $commentsCount > 0}{$commentsCount}{/if}</span>
             </a>
-            <a n:if="!($forceNoShareLink ?? false)" id="reposts{$post->getPrettyId()}" class="post_share action_button" href="javascript:repost('{$post->getPrettyId()}', 'post')">
+            <a n:if="!($forceNoShareLink ?? false)" id="reposts{$post->getPrettyId()}" class="post_share action_button" href="javascript:repost('{$post->getPrettyId()}', 'post')" title="{tr('share')}">
                 <i class="action_icon"></i>
-                <span class="action_label">{tr('share')}</span>
                 <span class="action_count" id="repostsCount{$post->getPrettyId()}">{if $repostsCount > 0}{$repostsCount}{/if}</span>
             </a>
         </div>
-        <a n:if="!$is2018 && !($forceNoCommentsLink ?? false) && $commentsCount == 0" class="reply_link_wrap" href="javascript:window.toggle_comment_textarea({$commentTextAreaId})">{_comment}</a>
         <div n:if="$suggestion && $canBePinned" class="suggestionControls buttons_row">
             <button class="button" id="publish_post" data-id="{$post->getId()}">{_publish_suggested}</button>
             <button class="button button_gray" id="decline_post" data-id="{$post->getId()}">{_decline_suggested}</button>

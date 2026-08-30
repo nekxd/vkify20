@@ -67,8 +67,7 @@
                     <div class="pv_author_date">{$photo->getPublicationTime()}</div>
                 </div>
             </div>
-            {var $is2018 = ($_COOKIE['vkify16_2018mode'] ?? '0') === '1'}
-            {var $likesCount = $photo->getLikesCount()}
+                        {var $likesCount = $photo->getLikesCount()}
             <div class="post_full_like_wrap" n:if="isset($thisUser)" n:ifcontent>
                 <div class="post_full_like" n:ifcontent>
                     {var $liked = $photo->hasLikeFrom($thisUser)}
@@ -77,7 +76,7 @@
                         <span class="action_label">{tr('mobile_like')}</span>
                         <span class="action_count">{if $likesCount > 0}{$likesCount}{/if}</span>
                     </a>
-                    <a n:if="$is2018" id="comments{$photo->getPrettyId()}" class="post_reply action_button mobileonly" href="/photo{$photo->getPrettyId()}">
+                    <a n:if="false" id="comments{$photo->getPrettyId()}" class="post_reply action_button mobileonly" href="/photo{$photo->getPrettyId()}">
                         <i class="action_icon"></i>
                         <span class="action_label">{tr('reply')}</span>
                         <span class="action_count" id="commentsCount{$photo->getPrettyId()}">{if $cCount > 0}{$cCount}{/if}</span>
@@ -87,7 +86,7 @@
                         <span class="action_label">{tr('share')}</span>
                     </a>
                 </div>
-                <a n:if="!$is2018 && $cCount == 0" class="reply_link_wrap mobileonly" href="/photo{$photo->getPrettyId()}">{_comment}</a>
+                <a n:if="$cCount == 0" class="reply_link_wrap mobileonly" href="/photo{$photo->getPrettyId()}">{_comment}</a>
             </div>
             {if (isset($thisUser) && $thisUser->getId() === $photo->getOwner()->getId()) || !empty($photo->getDescription())}
             {var $descPlain = $photo->getDescription($html = false) ?? ''}

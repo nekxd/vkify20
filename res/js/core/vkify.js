@@ -443,7 +443,7 @@ vkify.ready(() => {
     }
 
     const currentTheme = document.body.getAttribute('data-themepack');
-    if (currentTheme !== 'vkify16') {
+    if (currentTheme !== 'vk2020') {
         if (typeof NewNotification === 'function') {
             NewNotification(
                 window.vkifylang?.something_not_right || "Something isn't right.",

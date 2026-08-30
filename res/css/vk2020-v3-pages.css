@@ -1,0 +1,135 @@
+/* ============ VK2020 v3: Мессенджер (фото 6-7, 11-12) ============ */
+/* Диалоги: единый список, разделители, hover */
+.nim-dialog {
+    border-radius: 8px;
+    transition: background-color 0.1s;
+}
+.nim-dialog:hover {
+    background-color: #f5f6f8;
+}
+.dark-mode .nim-dialog:hover {
+    background-color: #232324;
+}
+.nim-dialog + .nim-dialog {
+    border-top: 1px solid transparent;
+}
+
+/* Баблы сообщений: свои — синие, чужие — серые, круглые углы */
+.crp-list .msg,
+.msg {
+    border-radius: 12px;
+}
+.crp-list .msg:not(.msg_out),
+.msg:not(.msg_out) {
+    background-color: #f0f2f5;
+}
+.crp-list .msg.msg_out,
+.msg.msg_out {
+    background-color: #0077ff;
+    color: #ffffff;
+}
+.msg.msg_out a {
+    color: #ffffff;
+}
+.dark-mode .msg:not(.msg_out) {
+    background-color: #2c2d2e;
+    color: #e1e3e6;
+}
+
+/* Список диалогов слева — карточка */
+.im_dialogs_wrapper,
+.crp-list:first-child {
+    border-radius: 8px;
+}
+
+/* ============ Обложка профиля (фото 5): VK-стиль ============ */
+/* Обложка во всю ширину, скругление снизу, затемнение для читаемости */
+.backdrop {
+    position: relative;
+}
+.backdrop img {
+    width: 100%;
+    height: auto;
+    max-height: 420px;
+    object-fit: cover;
+}
+.page_content_wrap > .backdrop,
+.profile .backdrop {
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+}
+/* Градиент-затемнение снизу как в ВК */
+.backdrop::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.35) 100%);
+    pointer-events: none;
+}
+
+/* ============ Группы (фото 8) ============ */
+/* Карточки групп — сетка с круглыми аватарками */
+.group_table .group_row,
+.search_row {
+    border-radius: 8px;
+}
+.group_list .group {
+    border-radius: 8px;
+}
+
+/* ============ Видео (фото 16) ============ */
+.video_item,
+.video_item .video_thumb {
+    border-radius: 8px;
+    overflow: hidden;
+}
+.video_item:hover {
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ============ Музыка (фото 15) ============ */
+.audioEmbed {
+    border-radius: 8px;
+}
+.audio_row,
+.audio_row_container {
+    border-radius: 8px;
+}
+.audio_row:hover {
+    background-color: #f5f6f8;
+}
+.dark-mode .audio_row:hover {
+    background-color: #232324;
+}
+
+/* ============ Мобильная версия (фото 9, 10, 13, 14, 17) ============ */
+@media (max-width: 660px) {
+    /* Лента: посты слитные карточки без рамок */
+    .scroll_container:has(> .post.page_block) > .post.page_block {
+        border-radius: 0;
+        border: 0;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+    .scroll_container:has(> .post.page_block) > .post.page_block + .post.page_block {
+        border-top: 1px solid #e7e8ec;
+    }
+    /* Сердце на мобилке */
+    .post .post_like .action_icon {
+        background-size: 20px 20px !important;
+    }
+    .post .my_like .action_icon,
+    .post .post_like[data-liked="1"] .action_icon {
+        background-size: 24px 24px !important;
+        width: 24px;
+        height: 24px;
+    }
+    /* Видео-карточки */
+    .video_item {
+        border-radius: 0;
+    }
+    /* Аудио */
+    .audioEmbed {
+        border-radius: 0;
+    }
+}

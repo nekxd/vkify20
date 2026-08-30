@@ -1,0 +1,474 @@
+/*
+ * VK2020 themepack — v3 fine-tuning (по скринам юзера, vk.ru 2024-25)
+ * 1) Лайк-сердце красное побольше, без текста
+ * 2) Лента: единая склеенная карточка с разделителями
+ * 3) Чекбоксы VK blue
+ * 4) Поиск vk.ru-пилюля (appearance:none — ровный текст); шапка без имени/инстанса
+ * 5) НИКАКОГО СИНЕГО ТЕКСТА: имена #3c3c3c (светлая) / #ffffff (тёмная)
+ */
+
+/* ===== 0. ГЛОБАЛЬНО: НЕТ СИНЕГО ТЕКСТА ===== */
+/* Сама переменная ссылок = тёмно-серая (светлая тема) — убивает синий во всех 30+ местах каскадом */
+body {
+    --link-color: #3c3c3c;
+    --link-color-2: #3c3c3c;
+}
+body.dark-mode {
+    --link-color: #ffffff;
+    --link-color-2: #e1e3e6;
+}
+/* Табы тоже без синего текста */
+.wall_tabs .selected a,
+.page_block_h2 a.selected {
+    color: #000000;
+    font-weight: 600;
+}
+.dark-mode .wall_tabs .selected a,
+.dark-mode .page_block_h2 a.selected {
+    color: #ffffff;
+}
+
+/* ===== 1. ЛАЙК-СЕРДЦЕ ===== */
+.post .post_like .action_label,
+.reply .post_like .action_label,
+.wall .post_like .action_label,
+.photo .post_like .action_label,
+.note .post_like .action_label,
+.video .post_like .action_label {
+    display: none !important;
+}
+
+/* сердце-лайк: РОВНО КАК ОСТАЛЬНЫЕ КНОПКИ — 26px */
+.post .post_like .action_icon,
+.reply .post_like .action_icon {
+    width: 26px;
+    height: 26px;
+    margin: 0;
+    -webkit-mask: none;
+    mask: none;
+    background: none !important;
+    background-color: transparent !important;
+}
+.post .post_like .action_icon {
+    background: url("../icons/svg/like_outline_28.svg") center/26px 26px no-repeat !important;
+}
+.reply .post_like .action_icon {
+    background: url("../icons/svg/like_outline_28.svg") center/20px 20px no-repeat !important;
+}
+
+/* лайкнуто: красное сердце, тот же размер 26px */
+.post .my_like .action_icon,
+.post .post_like[data-liked="1"] .action_icon {
+    background: url("../icons/svg/like_fill_red_28.svg") center/26px 26px no-repeat !important;
+    width: 26px;
+    height: 26px;
+    margin: 0;
+}
+.reply .my_like .action_icon,
+.reply .post_like[data-liked="1"] .action_icon {
+    background: url("../icons/svg/like_fill_red_28.svg") center/20px 20px no-repeat !important;
+    width: 20px;
+    height: 20px;
+}
+
+/* счётчик лайков рядом с сердцем */
+.post .post_like .action_count,
+.reply .post_like .action_count {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted-text-color-2);
+    line-height: 28px;
+    margin-left: 2px;
+}
+.post .post_like[data-liked="1"] .action_count,
+.post .my_like .action_count,
+.reply .my_like .action_count {
+    color: #ff3347;
+}
+
+/* Общий размер клик-зоны */
+.post .post_like {
+    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
+}
+.post .post_full_like {
+    margin-top: 4px;
+}
+
+/* Лайк в фото/видео/заметках — тот же стиль */
+.photo .post_like .action_icon,
+.video .post_like .action_icon,
+.note .post_like .action_icon {
+    background: url("../icons/svg/like_outline_28.svg") center/22px 22px no-repeat !important;
+    width: 22px;
+    height: 22px;
+}
+
+/* ===== 2. ЛЕНТА: ПОСТЫ КРУПНЕЕ ===== */
+#news_feed .post.page_block,
+.wall_posts .post.page_block,
+.feed .post.page_block,
+.wall .post.page_block,
+.masonry_wrapper .post.page_block,
+.messages-container .post.page_block,
+.scroll_container > .post.page_block {
+    border: 1px solid #e7e8ec !important;
+    border-radius: 16px !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    margin-bottom: 8px !important;
+    padding: 12px 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+}
+/* картинки в постах — ПО СЕРЕДИНЕ (текст остаётся слева) */
+.post .post_content .text {
+    text-align: left;
+}
+.post .post-content .text {
+    text-align: left;
+}
+.post .attachments,
+.post .post_content .attachments,
+.post .post-content .attachments {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    text-align: center;
+}
+.post .attachment {
+    display: inline-block;
+    float: none !important;
+    margin: 0 auto;
+}
+/* одиночная картинка-вложение — блочно по центру */
+.post .attachment .photo_image,
+.post .attachment img {
+    display: block;
+    margin: 0 auto;
+}
+/* текст поста (не имя) — чуть меньше, аккуратно */
+.post .post_content .text, .post .text {
+    font-size: 14px;
+    line-height: 1.45;
+    word-wrap: break-word;
+}
+.post .post-content {
+    width: 100%;
+    margin: 4px 0 6px !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+.post .post_author a.author, .post .post_author .author {
+    font-size: 15px;
+    font-weight: 600;
+}
+.post .post_date a, .post .post_date {
+    font-size: 13px;
+}
+/* комменты/ответы */
+.reply .post-content, .reply .text {
+    font-size: 13.5px;
+    line-height: 1.45;
+}
+.reply .author a, .reply .post_author a.author {
+    font-size: 14px;
+    font-weight: 500;
+}
+/* ===== ФИКС ИЗОБРАЖЕНИЙ В ПОСТАХ ===== */
+/* фото-вложения: не вылезают за карточку, ровные скругления */
+.post .post-content .attachments .attachment img,
+.post .attachments img,
+.attachment img,
+.post .post_content img {
+    max-width: 100% !important;
+    height: auto !important;
+    border-radius: 6px;
+    object-fit: cover;
+}
+/* одиночное фото — по центру, не растянуто */
+.post .attachment .photo_image,
+.post .attachment img[src*="/blob_"] {
+    width: auto;
+    max-width: 100%;
+}
+/* сетка нескольких фото — ровные */
+.post .attachments_m {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.post .attachments_m img {
+    border-radius: 4px;
+}
+
+/* ===== ПАНЕЛЬ ЗАПИСЕЙ: отделена от постов, закруглённая ===== */
+.page_block.postFeedWrapperMicroblog {
+    border: 1px solid #e7e8ec !important;
+    border-radius: 16px !important;
+    background: #ffffff !important;
+    margin-bottom: 8px !important;
+    padding: 6px 8px !important;
+}
+.dark-mode .page_block.postFeedWrapperMicroblog {
+    background: #232324 !important;
+    border-color: #2c2d2e !important;
+}
+/* шапка «Записи» — тоже своя карточка с отступом */
+.page_block.wall_posts_tabs {
+    border: 1px solid #e7e8ec !important;
+    border-radius: 16px !important;
+    background: #ffffff !important;
+    margin-bottom: 8px !important;
+}
+.dark-mode .page_block.wall_posts_tabs {
+    background: #232324 !important;
+    border-color: #2c2d2e !important;
+}
+
+/* Контейнер ленты — прозрачный (карточки сами по себе) */
+.scroll_container:has(> .post.page_block),
+#news_feed,
+.wall_posts {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+    padding: 0 !important;
+}
+
+/* Dark mode: раздельные тёмные карточки — серые ближе к чёрному */
+.dark-mode #news_feed .post.page_block,
+.dark-mode .wall_posts .post.page_block,
+.dark-mode .feed .post.page_block,
+.dark-mode .wall .post.page_block,
+.dark-mode .scroll_container > .post.page_block {
+    background: #232324 !important;
+    border-color: #2c2d2e !important;
+}
+
+/* ===== 3. ЧЕКБОКСЫ: VK blue ===== */
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    border: 1.5px solid #99a2ad;
+    border-radius: 4px;
+    height: 16px;
+    width: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    transition: background-color 0.12s, border-color 0.12s;
+    flex-shrink: 0;
+}
+input[type="checkbox"]:hover {
+    border-color: #626d7a;
+}
+input[type="checkbox"]:checked {
+    background-color: #0077ff;
+    border-color: #0077ff;
+}
+input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='m4 8.5 2.6 2.6L12 5.4'/%3E%3C/svg%3E") center/12px 12px no-repeat;
+}
+input[type="checkbox"]:disabled {
+    opacity: 0.4;
+}
+
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    border: 1.5px solid #99a2ad;
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    transition: border-color 0.12s;
+}
+input[type="radio"]:checked {
+    border-color: #0077ff;
+    border-width: 5px;
+    background: #fff;
+}
+.dark-mode input[type="radio"]:checked {
+    background: #19191a;
+}
+
+/* ===== 4. ШАПКА: поиск + без имени ===== */
+/* Имя юзера и название инстанса из шапки убрать */
+.end_navigation #userMenuName {
+    display: none !important;
+}
+.home_button .instance_name {
+    display: none;
+}
+
+/* Поиск: vk.ru пилюля, текст ровный (appearance:none убирает нативный searchfield) */
+#search_box select[name="section"] {
+    display: none !important;
+}
+.home_search {
+    width: 300px;
+}
+#search_and_one_more_wrapper {
+    display: flex;
+    align-items: center;
+}
+.page_header #search_box input[type="search"] {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    background: #f0f2f5 url("../icons/svg/search_outline_24.svg") no-repeat !important;
+    background-position: 9px center !important;
+    background-size: 18px 18px !important;
+    border: 0 !important;
+    border-radius: 17px !important;
+    height: 34px !important;
+    padding: 0 10px 0 35px !important;
+    margin: 7px 0 !important;
+    font-size: 14px !important;
+    font-family: inherit !important;
+    box-sizing: border-box !important;
+    outline: none !important;
+    color: #000000 !important;
+    text-align: left !important;
+    vertical-align: middle !important;
+    display: block;
+    width: 100%;
+    /* ровный текст по вертикали */
+    line-height: normal !important;
+    -webkit-box-align: center;
+    transition: background-color 0.15s, box-shadow 0.15s;
+}
+.page_header #search_box input[type="search"]::-webkit-search-decoration,
+.page_header #search_box input[type="search"]::-webkit-search-cancel-button,
+.page_header #search_box input[type="search"]::-webkit-search-results-button,
+.page_header #search_box input[type="search"]::-webkit-search-results-decoration {
+    display: none !important;
+    -webkit-appearance: none !important;
+}
+.page_header #search_box input[type="search"]:focus {
+    background-color: #ffffff !important;
+    box-shadow: 0 0 0 1.5px #0077ff inset !important;
+}
+.page_header #search_box input[type="search"]::placeholder {
+    color: #818c99 !important;
+    line-height: normal !important;
+}
+
+/* ===== 5. ИМЕНА АВТОРОВ: НА БЕЛОЙ — СЕРЫЕ БЛИЖЕ К ЧЁРНОМУ, НА ЧЁРНОЙ — БЕЛЫЕ.
+   НИКАКОГО СИНЕГО ТЕКСТА. ===== */
+.post .post_author a.author,
+.post .post_author .author,
+.post .author a,
+.reply .author a,
+.reply .post_author a.author {
+    color: #3c3c3c !important;
+    font-weight: 500;
+}
+.post .post_author a.author:hover,
+.post .post_author .author:hover,
+.post .author a:hover,
+.reply .author a:hover {
+    color: #3c3c3c !important;
+}
+.post .post_date a,
+.post .post_date {
+    color: #99a2ad;
+    font-size: 12.5px;
+}
+.post .post_date a:hover {
+    color: #99a2ad;
+}
+/* Тёмная тема: белые имена */
+.dark-mode .post .post_author a.author,
+.dark-mode .post .post_author .author,
+.dark-mode .post .author a,
+.dark-mode .reply .author a,
+.dark-mode .reply .post_author a.author {
+    color: #ffffff !important;
+}
+.dark-mode .post .post_author a.author:hover,
+.dark-mode .post .post_author .author:hover,
+.dark-mode .post .author a:hover,
+.dark-mode .reply .author a:hover {
+    color: #ffffff !important;
+}
+.dark-mode .post .post_date a,
+.dark-mode .post .post_date {
+    color: #818c99;
+}
+.dark-mode .post .post_date a:hover {
+    color: #818c99;
+}
+
+/* ===== 6. Мелочи ===== */
+/* Мобилка: юзернейм domain.com/username на профиле/группе */
+.appbar-username-wrap {
+    display: none;
+}
+@media (max-width: 660px) {
+    .appbar-username-wrap {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 56px;
+        padding: 2px 12px 6px;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.85);
+        font-weight: 400;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        z-index: 10;
+    }
+    .appbar:not(.appbar--transparent) .appbar-username-wrap {
+        color: var(--muted-text-color-2);
+        text-shadow: none;
+    }
+    .appbar--transparent.appbar--scrolled .appbar-username-wrap {
+        color: var(--muted-text-color-2);
+        text-shadow: none;
+    }
+}
+
+/* «нет постов» — серый центрированный блок, как ВК */
+.content_page_error,
+.no_posts,
+.empty_state {
+    text-align: center;
+    color: var(--muted-text-color);
+    padding: 32px 16px;
+    font-size: 13px;
+}
+
+/* Попапы (CMessageBox): ВК-карточка */
+.ovk-diag {
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.16);
+    overflow: hidden;
+}
+.ovk-diag-head {
+    font-weight: 600;
+    font-size: 14px;
+    padding: 14px 16px 0;
+}
+.ovk-diag-body {
+    padding: 12px 16px;
+    font-size: 13.5px;
+}
+.ovk-diag-action {
+    padding: 0 16px 14px;
+}
+
+/* Тултип галочки верификации — оставлен как есть (v2) */

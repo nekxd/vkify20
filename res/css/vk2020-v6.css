@@ -1,0 +1,363 @@
+/* ============ VK2020 v6: точечные правки (рамки, репост, аудио-вложения, диалоги, попапы) ============ */
+
+/* ===== 1. МЕЛКИЕ рамки у постов — чуть заметнее ===== */
+#news_feed .post.page_block,
+.wall_posts .post.page_block,
+.feed .post.page_block,
+.wall .post.page_block,
+.masonry_wrapper .post.page_block,
+.messages-container .post.page_block,
+.scroll_container > .post.page_block {
+    border: 1px solid #e7e8ec !important;
+    box-shadow: none !important;
+    border-radius: 16px !important;
+}
+/* репост внутри поста (copy_quote): имя СЛЕВА, с нормальным отступом от аватара */
+.post .copy_quote .post_header,
+.post .copy_quote .post_header_info,
+.post .copy_quote .post_author {
+    text-align: left !important;
+    margin-left: 0 !important;
+}
+.post .copy_quote .post_header_info {
+    padding-left: 10px !important;
+}
+/* имя не обрезать троеточием в обычных постах */
+.post .post_author .author {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    max-width: none !important;
+}
+.copy_quote .post_author .author {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+}
+
+/* ===== 2. explicit-плашка после названия ===== */
+.audioInfoStacked .title .explicitMark {
+    display: inline-block;
+    vertical-align: -1px;
+    margin-left: 4px;
+    fill: #818c99;
+}
+.dark-mode .audioInfoStacked .title .explicitMark {
+    fill: #a3adb8;
+}
+
+/* ===== 3. Аудио-вложения на стене: длинное название -> "..." ===== */
+/* обёртка вложения — фикс ширина, многоточие */
+.post .audios_attachment .audioEntry,
+.post .audios_attachment .audioEmbed {
+    max-width: 100%;
+    overflow: hidden;
+}
+.post .audios_attachment .audioInfoStacked {
+    min-width: 0;
+}
+.post .audios_attachment .audioInfoStacked .title,
+.post .audios_attachment .audioInfoStacked .performer {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    max-width: 100%;
+}
+
+/* ===== 4. ДИАЛОГИ: закруглённые окна сообщений ===== */
+/* бабл исходящего сообщения */
+.imess > .messages > .msg,
+.messaging-ui .msg,
+.crp .msg,
+.msg {
+    border-radius: 12px !important;
+}
+/* углы: своё сообщение скруглено кроме правого верхнего, чужое — кроме левого верхнего */
+.imess > .messages > .msg,
+.messaging-ui .msg {
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+
+/* ===== 5. Видео-попап — ПОЧТИ на весь экран =====
+   Реальная структура (al_wall.js custom_template):
+   .ovk-photo-view-dimmer > .ovk-modal-player-window > #ovk-player-part + #ovk-player-info */
+.ovk-photo-view-dimmer {
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0, 0, 0, 0.85) !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+}
+.ovk-modal-player-window {
+    width: calc(100vw - 32px) !important;
+    max-width: calc(100vw - 32px) !important;
+    height: calc(100vh - 32px) !important;
+    max-height: calc(100vh - 32px) !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    background: #000 !important;
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+}
+#ovk-player-part {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    overflow: hidden;
+}
+#ovk-player-part .top-part {
+    flex-shrink: 0;
+    padding: 12px 16px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.4);
+}
+#ovk-player-part .center-part {
+    flex: 1 !important;
+    min-height: 0;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+}
+#ovk-player-part .center-part video,
+#ovk-player-part .center-part .bsdn,
+#ovk-player-part .center-part .bsdn_video_player,
+#ovk-player-part .center-part iframe {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    aspect-ratio: auto !important;
+    border-radius: 0 !important;
+}
+#ovk-player-part .bottom-part {
+    flex-shrink: 0;
+    padding: 10px 16px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.4);
+}
+#ovk-player-info {
+    background: #000;
+    color: #fff;
+}
+/* кнопки bsdn в попапе — без заливок */
+#ovk-player-part .bsdn_playButton,
+#ovk-player-part .bsdn_fullScreenButton,
+#ovk-player-part .bsdn_repeatButton,
+#ovk-player-part .bsdn_volumeButton {
+    background: none !important;
+    background-color: transparent !important;
+    opacity: 0.9;
+}
+#ovk-player-part .bsdn_controlsBar,
+#ovk-player-part .bsdn_video_player .bsdn_controlsBar {
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.55)) !important;
+    border-top: 0 !important;
+}
+
+/* ===== 6. Крестик попапа: ВИДИМЫЙ по темам ===== */
+.ovk-diag-head-close {
+    background: url("../icons/svg/cross_dark.svg") no-repeat 12px 18px !important;
+    opacity: 0.8;
+    width: 14px;
+    height: 14px;
+    padding: 17px 20px 17px 10px !important;
+    float: right;
+}
+.ovk-diag-head-close:hover {
+    opacity: 1;
+}
+.dark-mode .ovk-diag-head-close {
+    background: url("../icons/svg/cross_light.svg") no-repeat 12px 18px !important;
+}
+
+/* ===== 7. Галочка на одном уровне с фамилией ===== */
+.post .post_author .page_verified,
+.copy_quote .post_author .page_verified {
+    width: 15px !important;
+    height: 15px !important;
+    vertical-align: -2px !important;
+    margin: 0 0 0 3px !important;
+}
+h2.page_name .page_verified {
+    vertical-align: -3px !important;
+    margin-left: 3px !important;
+}
+
+/* ===== 8. Лайк коммента на одном уровне с «Ответить» ===== */
+.comment .post_full_like,
+.reply .post_full_like {
+    margin-top: 4px !important;
+    padding-top: 0 !important;
+}
+.comment .post_full_like .action_button,
+.reply .post_full_like .action_button {
+    vertical-align: middle !important;
+}
+.comment .post_full_like_wrap .post_reply_link,
+.comment .post_full_like_wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px;
+}
+
+/* ===== 9. Аудио в попапе/странице: название не вылазит за окно ===== */
+.audioEntry .audioInfoStacked,
+.audioEntry .status,
+.audioEntry .status .mediaInfo {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+}
+.audioEntry .audioInfoStacked .title,
+.audioEntry .audioInfoStacked .performer {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100% !important;
+    display: block !important;
+}
+/* таймер и кнопки не сжимают текст до вылезания */
+.audioEntry .mini_timer {
+    flex-shrink: 0 !important;
+    max-width: 130px !important;
+    overflow: hidden !important;
+}
+.audioEntry .mini_timer .buttons {
+    display: flex;
+    gap: 2px;
+}
+
+/* ===== 10. Сетка: как раньше (база OpenVK 960px, посты 795px) ===== */
+body {
+    --layout-width: 960px !important;
+    --page-width: calc(var(--layout-width) - 165px) !important;
+}
+/* на средних экранах — поменьше, но всё равно шире базы */
+
+/* ===== 11. ПЛОТНАЯ ЛЕНТА: минимум пустоты вокруг и внутри постов ===== */
+.post, .post.page_block {
+    margin-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+.post .post-content,
+.post .post-content .text,
+.post .text {
+    margin-top: 2px !important;
+    margin-bottom: 4px !important;
+}
+.post .post_header {
+    margin-bottom: 2px !important;
+}
+.post .post_full_like_wrap {
+    margin: 0 !important;
+    padding: 0 0 2px !important;
+}
+/* сами карточки — вплотную друг к другу */
+#news_feed .post.page_block,
+.wall_posts .post.page_block,
+.feed .post.page_block,
+.wall .post.page_block,
+.scroll_container > .post.page_block {
+    margin-bottom: 6px !important;
+}
+/* разделитель ленты (шапка "Записи") — без лишнего низа */
+.wall_posts_tabs {
+    padding-bottom: 0 !important;
+}
+
+/* ===== 12. АУДИО-МОДУЛЬ на странице: ничего не вылезает за рамки ===== */
+/* строка статуса с треком (mobile-info-row) */
+.mobile-info-rows .mobile-info-row .mir-text {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+}
+/* модуль «Аудиозаписи» на странице профиля/группы */
+.mobile-scroll-card .msm-placeholder .msm-placeholder-label {
+    display: block !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+}
+/* сам модуль — фиксированные границы, ничего не распирает */
+.module .module_body {
+    max-width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+/* аудио в любом модуле: контейнер режет лишнее */
+.module .audioEmbed,
+.module .audioEntry,
+.module .audioEntryWrapper {
+    max-width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+.module .audioEntry .audioInfoStacked .title,
+.module .audioEntry .audioInfoStacked .performer {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100% !important;
+}
+/* подстраховка: любые вложенные блоки в модуле не шире модуля */
+.module * {
+    max-width: 100%;
+}
+
+/* ===== 13. ВК-вёрстка поста: ава СЛЕВА, имя справа в строке, пост ниже, кнопки под постом ===== */
+/* шапка: ава слева, имя-фамилия справа от неё (в строке, по центру авы) */
+.post .post_header {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-bottom: 6px !important;
+}
+.post .post_header .post_image {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 0;
+    flex-shrink: 0;
+}
+/* имя-фамилия справа от авы, вертикально по центру */
+.post .post_header .post_header_info {
+    padding: 0 !important;
+    margin: 0 !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+.post .post_author {
+    padding: 0 !important;
+    line-height: 1.3 !important;
+    margin: 0 !important;
+}
+.post .post_author a.author {
+    display: inline-block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.post .post_date {
+    margin-top: 1px !important;
+    line-height: 1.2 !important;
+}
+/* пост — чуть ниже имени */
+.post .post-content {
+    margin-top: 8px !important;
+}
+/* кнопки — под постом */
+.post .post_full_like_wrap {
+    margin-top: 4px !important;
+}

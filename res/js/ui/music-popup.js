@@ -5,7 +5,8 @@ vkify.musicPopup = vkify.musicPopup || {};
 
 const __vkifyFavicon = vkify.resourceBase ? {
     get default() {
-        const ico = vkify.getSetting('ovkHat') ? 'ovk.ico' : 'default.ico';
+        const branded = vkify.getSetting('vkBranding');
+        const ico = branded ? 'vk.ico' : 'default.ico';
         return vkify.resourceUrl('icons/' + ico);
     },
     play: vkify.resourceUrl('icons/play.ico'),

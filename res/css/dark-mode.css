@@ -33,8 +33,8 @@ body.dark-mode {
 	--muted-text-color-2: #939393;
 	--muted-text-color-3: #b2b2b2;
 	--heading-color: #ffffff;
-	--link-color: #71aaeb;
-	--link-color-2: #8fbdf1;
+	--link-color: #ffffff;
+	--link-color-2: #e1e3e6;
 
 	/* Sidebar colors */
 	--sidebar-color--hover: rgba(255, 255, 255, 0.06);

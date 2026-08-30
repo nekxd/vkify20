@@ -1,8 +1,7 @@
-{php if (!function_exists('vkifyTr')) require_once \OPENVK_ROOT . '/themepacks/vkify16/res/php/vkify_i18n.php';}
+{php if (!function_exists('vkifyTr')) require_once \OPENVK_ROOT . '/themepacks/vk2020/res/php/vkify_i18n.php';}
 {var $instance_name = \OPENVK_ROOT_CONF['openvk']['appearance']['name']}
-{var $darkModeEnabled = ($_COOKIE['vkify16_darkmode'] ?? '0') === '1'}
-{var $mode2018Enabled = ($_COOKIE['vkify16_2018mode'] ?? '0') === '1'}
-{var $ovkHatEnabled = ($_COOKIE['ovkhat'] ?? '0') === '1'}
+{var $darkModeEnabled = ($_COOKIE['vk2020_darkmode'] ?? '0') === '1'}
+{var $ovkHatEnabled = false}
 {var $hideSidebar = $_SERVER['REQUEST_URI'] === '/' || $_SERVER['REQUEST_URI'] === '/reg' || $_SERVER['REQUEST_URI'] === '/login' || (isset($thisUser) && $thisUser->isBanned())}
 {if !isset($parentModule) || substr($parentModule, 0, 21) === 'libchandler:absolute.'}
 <!DOCTYPE html>
@@ -12,7 +11,8 @@
             {ifset title}{include title} - {/ifset}{$instance_name}
         </title>
         <meta charset="utf-8" />
-        <link rel="shortcut icon" href="/themepack/vkify16/{$theme->getVersion()}/resource/favicon_vk.ico" />
+        {var $vkBrandingOn = ($_COOKIE['vk2020_branding'] ?? '1') !== '0'}
+        <link rel="shortcut icon" href="/themepack/vk2020/{$theme->getVersion()}/resource/icons/{if $vkBrandingOn}vk.ico{else}default.ico{/if}" />
         <meta name="application-name" content="{$instance_name}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta n:ifset="$csrfToken" name="csrf" value="{$csrfToken}" />
@@ -49,17 +49,14 @@
         <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"></noscript>
         {include "_includeCSS.latte"}
         {if $darkModeEnabled}
-            <link id="dark-mode-css" rel="stylesheet" href="/themepack/vkify16/{$theme->getVersion()|noescape}/resource/css/dark-mode.css">
-        {/if}
-        {if $mode2018Enabled}
-            <link id="2018-mode-css" rel="stylesheet" href="/themepack/vkify16/{$theme->getVersion()|noescape}/resource/css/2018.css">
+            <link id="dark-mode-css" rel="stylesheet" href="/themepack/vk2020/{$theme->getVersion()|noescape}/resource/css/dark-mode.css">
         {/if}
 
         {ifset headIncludes}
             {include headIncludes}
         {/ifset}
     </head>
-    <body {if isset($thisUser)}data-themepack="{$thisUser->getStyle()}"{/if} n:class="$hideSidebar ? no-sidebar, isset($thisUser) && $thisUser->isBanned() ? banned, $darkModeEnabled ? dark-mode, $ovkHatEnabled ? ovkhat">
+    <body {if isset($thisUser)}data-themepack="{$thisUser->getStyle()}"{/if} n:class="$hideSidebar ? no-sidebar, isset($thisUser) && $thisUser->isBanned() ? banned, $darkModeEnabled ? dark-mode,">
         {include "_mobileIcons.latte"}
         <div n:if="\OPENVK_ROOT_CONF['openvk']['preferences']['bellsAndWhistles']['testLabel']" id="test-label">FOR TESTING PURPOSES ONLY</div>
 
@@ -108,16 +105,16 @@
                     <span class="hamburger-badge" id="hamburgerBadge"></span>
                 </div>
                 <div class="appbar-title">{ifset title}{include title}{/ifset}</div>
+                <div class="appbar-username-wrap mobileonly" n:ifset="appbar_username">{include appbar_username}</div>
                 <div class="appbar-extra" n:ifset="appbar_extra">
                     {block appbar_extra}{/block}
                 </div>
             </div>
             <div class="page_header">
                 <div class="page_header_inner">
-                    <a href="/" class="home_button" title="{$instance_name}">
+                    <a href="/" class="home_button" title="VK">
                         <span class="home_button_bg"></span>
-                        <span n:if="$instance_name != \OPENVK_DEFAULT_INSTANCE_NAME && !$ovkHatEnabled" class="instance_name">{$instance_name}</span>
-                    </a>
+                        </a>
                     {if !isset($thisUser) || (!$thisUser->isBanned() && $thisUser->isActivated())}
                         <div class="home_search" id="search_box">
                             <div id="search_box_fr">
@@ -170,7 +167,6 @@
                                 <div class="ui_actions_menu_wrap" onclick="{='uiActionsMenu.toggle(this, null, {align: "right"});'|noescape}">
                                     <div class="link">
                                         <a id="userMenuTrigger">
-                                            <div id="userMenuName">{$thisUser->getFirstName()}</div>
                                             {include 'components/avatar.latte', author => $thisUser, size => 'miniscule', id => 'userMenuAvatar'}
                                             <div id="userMenuArrow"></div>
                                         </a>
@@ -424,10 +420,9 @@
                             </div>
                         </div>
                     {else}
-                        <a href="/" class="home_button mobileonly" title="{$instance_name}">
+                        <a href="/" class="home_button mobileonly" title="VK">
                             <span class="home_button_bg"></span>
-                            <span n:if="$instance_name != \OPENVK_DEFAULT_INSTANCE_NAME && !$ovkHatEnabled" class="instance_name">{$instance_name}</span>
-                        </a>
+                            </a>
                         <form id="fastLogin" action="/login" method="POST" enctype="multipart/form-data">
                             <label class="field" for="login"><span>{_email}:</span></label>
                             <input id="login" type="text" name="login" required />
@@ -638,23 +633,25 @@
         </script>
 
         <script>window.vkifylang = {=json_encode(vkifyGetLang(), 15)|noescape}</script>
-        <script src="/themepack/vkify16/{$theme->getVersion()}/resource/js/core/vkify.js"></script>
-        <script src="/themepack/vkify16/{$theme->getVersion()}/resource/js/core/settings-config.js"></script>
+        <script src="/themepack/vk2020/{$theme->getVersion()}/resource/js/core/vkify.js"></script>
+        <script src="/themepack/vk2020/{$theme->getVersion()}/resource/js/core/settings-config.js"></script>
         <script>
         </script>
         {script "js/al_wall.js"}
 
-        <script src="/themepack/vkify16/{$theme->getVersion()}/resource/js/ui/page.js"></script>
-        <script src="/themepack/vkify16/{$theme->getVersion()}/resource/js/ui/tooltips.js"></script>
+        <script src="/themepack/vk2020/{$theme->getVersion()}/resource/js/ui/page.js"></script>
+        <script src="/themepack/vk2020/{$theme->getVersion()}/resource/js/ui/tooltips.js"></script>
+        <script src="/themepack/vk2020/{$theme->getVersion()}/resource/js/ui/verify-tooltips.js"></script>
+        <script src="/themepack/vk2020/{$theme->getVersion()}/resource/js/ui/audio-covers.js"></script>
 
-        <script defer src="/themepack/vkify16/{$theme->getVersion()}/resource/js/core/router.js"></script>
-        <script defer src="/themepack/vkify16/{$theme->getVersion()}/resource/js/features/mobile.js"></script>
+        <script defer src="/themepack/vk2020/{$theme->getVersion()}/resource/js/core/router.js"></script>
+        <script defer src="/themepack/vk2020/{$theme->getVersion()}/resource/js/features/mobile.js"></script>
 
         {* Bundled themepack JS (see build.mjs for module order) *}
-        <script defer src="/themepack/vkify16/{$theme->getVersion()}/resource/js/dist/vkify16.bundle.js"></script>
+        <script defer src="/themepack/vk2020/{$theme->getVersion()}/resource/js/dist/vk2020.bundle.js"></script>
 
         {if date('n-j') === '4-1'}
-        <script defer src="/themepack/vkify16/{$theme->getVersion()}/resource/js/features/doge.js"></script>
+        <script defer src="/themepack/vk2020/{$theme->getVersion()}/resource/js/features/doge.js"></script>
         {/if}
         {ifset bodyScripts}
             {include bodyScripts}

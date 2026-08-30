@@ -1,0 +1,229 @@
+/* ============ Обложка-КНОПКА (iTunes API, фолбэк song.jpg) ============ */
+/* Обложка трека = кнопка воспроизведения: 40px, ховер — затемнение + play,
+   играет — затемнение + pause. Клик дергает встроенный .playIcon (JS). */
+.audioEntry .playerButton.audioCoverButton {
+    width: 40px !important;
+    height: 40px !important;
+    position: relative;
+    flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    margin: 0;
+    padding: 0 !important;
+    background: #e7e8ec;
+}
+.dark-mode .audioEntry .playerButton.audioCoverButton {
+    background: #2c2d2e;
+}
+.audioCoverButton .audioCoverImg {
+    width: 40px !important;
+    height: 40px !important;
+    object-fit: cover;
+    display: block;
+    border-radius: 8px;
+    transition: filter 0.15s;
+}
+/* затемнение при ховере и когда играет */
+.audioCoverButton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0);
+    transition: background 0.15s;
+    pointer-events: none;
+    border-radius: 8px;
+}
+.audioCoverButton:hover::after {
+    background: rgba(0, 0, 0, 0.35);
+}
+.audioEntry.nowPlaying .audioCoverButton::after,
+.audioCoverButton.playing::after {
+    background: rgba(0, 0, 0, 0.45);
+}
+/* встроенная иконка playIcon — наша круглая кнопка по центру, видна на ховере/игре */
+.audioCoverButton .playIcon {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 18px !important;
+    height: 18px !important;
+    margin: 0 !important;
+    background-color: #ffffff !important;
+    -webkit-mask: url("../icons/svg/play_24.svg") center/contain no-repeat !important;
+    mask: url("../icons/svg/play_24.svg") center/contain no-repeat !important;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 2;
+    pointer-events: none;
+}
+.audioCoverButton:hover .playIcon {
+    opacity: 1;
+}
+.audioEntry.nowPlaying .audioCoverButton .playIcon,
+.audioCoverButton.playing .playIcon {
+    opacity: 1;
+    -webkit-mask-image: url("../icons/svg/pause_24.svg") !important;
+    mask-image: url("../icons/svg/pause_24.svg") !important;
+}
+/* старый playerButton-стиль не должен рисовать фон под обложкой */
+.audioEntry .playerButton:not(.audioCoverButton) {
+    /* на случай других playerButton — не трогаем */
+}
+
+/* обложка в плейлисте тоже компактная */
+.ape_cover_thumb {
+    border-radius: 6px;
+}
+
+/* ============ Поиск в музыке/на страницах (ui_search): VK-стиль ============ */
+/* серая пилюля с эмблемой, текст ровный, без кривого border-left */
+input.ui_search_field {
+    background: #f0f2f5 url("../icons/svg/ui_search_icon.svg") no-repeat !important;
+    background-position: 10px center !important;
+    background-size: 18px 18px !important;
+    padding: 9px 40px 9px 36px !important;
+    border: 0 !important;
+    border-left: 0 !important;
+    border-radius: 10px !important;
+    margin: 8px 0 !important;
+    font-size: 14px !important;
+    line-height: normal !important;
+    color: #000000 !important;
+    outline: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    display: block;
+    width: 100%;
+    box-sizing: border-box !important;
+    transition: background-color 0.15s;
+}
+input.ui_search_field:focus {
+    background-color: #ffffff !important;
+}
+.ui_search_field_empty input.ui_search_field {
+    background-color: #f0f2f5 !important;
+}
+.dark-mode input.ui_search_field {
+    background: #2c2d2e url("../icons/svg/ui_search_icon_dark.svg") no-repeat !important;
+    background-position: 10px center !important;
+    background-size: 18px 18px !important;
+    color: #ffffff !important;
+}
+.dark-mode input.ui_search_field:focus {
+    background-color: #19191a !important;
+}
+input.ui_search_field::placeholder {
+    color: #818c99 !important;
+}
+.dark-mode input.ui_search_field::placeholder {
+    color: #a3adb8 !important;
+}
+/* контейнер поиска — без полосы снизу, аккуратный */
+.ui_search {
+    border-bottom: 0 !important;
+    background-color: transparent !important;
+    padding: 0 6px;
+}
+.dark-mode .ui_search {
+    background-color: transparent !important;
+}
+/* крестик сброса — по центру */
+.ui_search_reset {
+    right: 10px;
+}
+
+/* Хедер-плеер: обложка играет рядом с кнопками */
+.top_audio_player .audioCover {
+    width: 32px;
+    height: 32px;
+    margin: 0 6px 0 0;
+}
+
+/* ============ Название трека СВЕРХУ, исполнитель СНИЗУ ============ */
+/* База: grid 0fr/10fr/1fr + .status height:14px overflow:hidden — ВСЁ прячет.
+   Переделываем жёстко: flex-ряд, две строки текста, высота свободная */
+.audioEntry .audioEntryWrapper {
+    display: flex !important;
+    grid-template-columns: none !important;
+    align-items: center !important;
+    gap: 10px !important;
+    height: auto !important;
+    padding: 8px 10px !important;
+}
+.audioEntry .status {
+    height: auto !important;
+    overflow: visible !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    position: static !important;
+}
+.audioEntry .status .mediaInfo {
+    line-height: normal !important;
+    overflow: visible !important;
+    position: static !important;
+    width: 100% !important;
+}
+.audioEntry .info.audioInfoStacked {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1px;
+    line-height: 1.3 !important;
+    min-width: 0;
+    max-width: 100%;
+}
+.audioEntry .info.audioInfoStacked .title {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #000000;
+    order: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+.audioEntry .info.audioInfoStacked .performer,
+.audioEntry .info.audioInfoStacked .performer a {
+    font-size: 12.5px;
+    font-weight: 400;
+    color: #818c99;
+    order: 2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+.dark-mode .audioEntry .info.audioInfoStacked .title {
+    color: #ffffff;
+}
+.dark-mode .audioEntry .info.audioInfoStacked .performer,
+.dark-mode .audioEntry .info.audioInfoStacked .performer a {
+    color: #a3adb8;
+}
+/* playerButton — нормальный размер в flex-ряду */
+.audioEntry .playerButton {
+    flex-shrink: 0;
+}
+.audioEntry .mini_timer {
+    flex-shrink: 0;
+}
+/* hover больше не абсOLUTE (база делала position:absolute при hover) */
+.audioEntry .status:hover .mediaInfo {
+    position: static !important;
+    overflow: visible !important;
+    white-space: normal !important;
+}
+
+/* nowPlaying: без серой заливки строки (в базе #606060) — только затемнение обложки */
+.audioEntry.nowPlaying {
+    background: transparent !important;
+    outline: 0 !important;
+}
+.audioEntry.nowPlaying .title {
+    color: #000000 !important;
+}
+.dark-mode .audioEntry.nowPlaying .title {
+    color: #ffffff !important;
+}

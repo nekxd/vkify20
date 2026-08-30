@@ -1,0 +1,539 @@
+/*
+ * VK2020 v4 — финальный слой (по правкам юзера):
+ * - галочка верификации VK verified_20 (#0077FF→цвет по теме через currentColor)
+ * - кнопки: ВСЕ #74acd8 (заливка), текст залитой кнопки белый на тёмной
+ * - «Редактировать профиль»: светлая #f0f1f3/#74acd8, тёмная #333/#fff
+ * - чекбоксы на тёмной: тёмные, галка #74acd8
+ * - посты: без текста у коммент/поделиться (иконка+счётчик)
+ * - видео-плеер почти fullscreen
+ * - НИКАКИХ СИНИХ ХЕДЕРОВ в попапах/на мобилке
+ * - VK Sans для юзернеймов
+ * - музыка на тёмной: кнопки белые
+ */
+
+/* ===== 0. Шрифт VK Sans ТОЛЬКО для юзернеймов ===== */
+@font-face {
+    font-family: "VK Sans";
+    src: url("../vk.ttf") format("truetype");
+    font-weight: 100 900;
+    font-display: swap;
+}
+.appbar-username,
+.appbar-username-wrap,
+.mobile-hero-username,
+.profile_username,
+.post-username,
+.nim-dialog--name .username {
+    font-family: "VK Sans", -apple-system, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* ===== 1. ГАЛОЧКА ВЕРИФИКАЦИИ VK verified_20 — голубая #74acd8, РОВНО у имени ===== */
+a.page_verified,
+.page_verified {
+    background: url("../icons/svg/verified_20.svg") center/contain no-repeat !important;
+    background-color: transparent !important;
+    -webkit-mask: none !important;
+    mask: none !important;
+    color: #74acd8 !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin: 0 0 0 1px !important;
+    padding: 0 !important;
+    vertical-align: -3px;
+    display: inline-block;
+}
+.post .page_verified,
+.reply .page_verified {
+    width: 14px !important;
+    height: 14px !important;
+    vertical-align: -2px;
+}
+.dark-mode .page_verified,
+.dark-mode a.page_verified {
+    color: #74acd8 !important;
+}
+.dark-mode .page_verified svg {
+    fill: #74acd8 !important;
+}
+
+/* ===== 2. КНОПКИ: ВСЕ #74acd8 ===== */
+/* Главная (синяя) кнопка → #74acd8 с белым текстом */
+.button.button_blue,
+.button:not(.button_gray):not(.profile_more_btn),
+input[class="button"]:not(.button_gray),
+.crp-actions .button {
+    background-color: #74acd8 !important;
+    color: #ffffff !important;
+    font-weight: 500;
+}
+.button.button_blue:hover,
+.button:not(.button_gray):not(.profile_more_btn):hover {
+    background-color: #68a3d2 !important;
+}
+.button.button_blue:active,
+.button:not(.button_gray):not(.profile_more_btn):active {
+    background-color: #5c9bc9 !important;
+}
+/* Тёмная тема: все кнопки #74acd8, текст белый */
+.dark-mode .button,
+.dark-mode input[class="button"],
+.dark-mode .button.button_blue {
+    background-color: #74acd8 !important;
+    color: #ffffff !important;
+}
+.dark-mode .button:hover {
+    background-color: #68a3d2 !important;
+}
+
+/* Серые кнопки остаются серыми (вторичные), НО на тёмной — #74acd8 по ТЗ */
+.dark-mode .button.button_gray,
+.dark-mode .button_gray {
+    background-color: #333333 !important;
+    color: #ffffff !important;
+}
+
+/* ===== 3. «Редактировать профиль» и actions на странице ===== */
+/* Кнопка «Редактировать профиль»: светлая #f0f1f3 с текстом #74acd8 */
+.profile_actions a.button[href="/edit"],
+a.button.button_wide[href="/edit"] {
+    background-color: #f0f1f3 !important;
+    color: #74acd8 !important;
+    font-weight: 500;
+    border-radius: 8px;
+    border: 0;
+}
+.dark-mode .profile_actions a.button[href="/edit"],
+.dark-mode a.button.button_wide[href="/edit"] {
+    background-color: #333333 !important;
+    color: #ffffff !important;
+}
+
+/* Троеточие-иконка кнопки Действия */
+.profile_more_dots {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    background-color: #74acd8;
+    -webkit-mask: url("../icons/svg/more_horizontal_24.svg") center/20px 20px no-repeat;
+    mask: url("../icons/svg/more_horizontal_24.svg") center/20px 20px no-repeat;
+}
+.dark-mode .profile_more_dots {
+    background-color: #ffffff;
+}
+.profile_more_btn {
+    width: 40px;
+    padding: 0 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* остальные actions-кнопки: светлая #f0f1f3/#74acd8 */
+.profile_action_buttons .button,
+.page_actions .button,
+#profile_actions .button,
+.profile_actions .button,
+.appbar-extra-btn + .ui_actions_menu .button {
+    background-color: #f0f1f3 !important;
+    color: #74acd8 !important;
+    font-weight: 500;
+    border-radius: 8px;
+}
+.profile_action_buttons .button:hover,
+.page_actions .button:hover {
+    background-color: #e8eaed !important;
+    color: #74acd8 !important;
+}
+/* тёмная: заливка #333, текст белый */
+.dark-mode .profile_action_buttons .button,
+.dark-mode .page_actions .button,
+.dark-mode #profile_actions .button,
+.dark-mode .profile_actions .button {
+    background-color: #333333 !important;
+    color: #ffffff !important;
+}
+.dark-mode .profile_action_buttons .button:hover,
+.dark-mode .page_actions .button:hover {
+    background-color: #3d3d3d !important;
+    color: #ffffff !important;
+}
+
+/* ===== 4. ЧЕКБОКСЫ: светлые VK-blue, тёмные — тёмные с галкой #74acd8 ===== */
+input[type="checkbox"] {
+    background-color: #ffffff;
+    border-color: #99a2ad;
+}
+input[type="checkbox"]:checked {
+    background-color: #74acd8;
+    border-color: #74acd8;
+}
+.dark-mode input[type="checkbox"] {
+    background-color: #2c2d2e;
+    border-color: #4a4b4c;
+}
+.dark-mode input[type="checkbox"]:checked {
+    background-color: #333333;
+    border-color: #74acd8;
+}
+.dark-mode input[type="checkbox"]:checked::after {
+    filter: none;
+}
+
+/* ===== 5. ПОСТЫ: кнопки без надписей, ЛАЙК КАК ВСЕ КНОПКИ (26px) ===== */
+.post .action_button .action_label,
+.reply .action_button .action_label {
+    display: none !important;
+}
+.post .action_button {
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 8px;
+    gap: 5px;
+}
+.post .action_button .action_icon {
+    width: 26px !important;
+    height: 26px !important;
+    -webkit-mask-size: 26px 26px !important;
+    mask-size: 26px 26px !important;
+    margin: 0 !important;
+}
+.reply .action_button .action_icon {
+    width: 20px !important;
+    height: 20px !important;
+    -webkit-mask-size: 20px 20px !important;
+    mask-size: 20px 20px !important;
+}
+.post .post_reply .action_icon,
+.post .post_share .action_icon {
+    background-size: 26px 26px !important;
+    width: 26px !important;
+    height: 26px !important;
+}
+.reply .post_reply .action_icon,
+.reply .post_share .action_icon {
+    background-size: 20px 20px !important;
+}
+.post .action_count {
+    font-size: 14px;
+    font-weight: 500;
+}
+.reply .action_count {
+    font-size: 13px;
+    font-weight: 500;
+}
+/* кнопки вплотную к посту */
+.post .post_full_like {
+    margin-top: 2px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.post .post_full_like_wrap {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* ===== 6. ВИДЕО-ПЛЕЕР: аккуратный тюнинг ===== */
+/* Плеер на странице: во всю ширину карточки, пропорции 16:9, скругления */
+.page_block .video_block_layout iframe,
+.video_block_layout iframe {
+    width: 100% !important;
+    aspect-ratio: 16 / 9 !important;
+    height: auto !important;
+    min-height: 360px;
+    border-radius: 8px;
+    background: #000;
+}
+/* сам блок видео без лишнего фона */
+.video_block_layout {
+    background: transparent;
+}
+/* Нативный bsdn-плеер: скруглённые углы и аккуратные контролы */
+.bsdn_video_player,
+.bsdn_video_player video {
+    border-radius: 8px;
+    overflow: hidden;
+}
+.bsdn_video_player .bsdn_controlsBar {
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.65));
+    padding: 8px 12px;
+}
+.bsdn_video_player .bsdn_playButton,
+.bsdn_video_player .bsdn_fullScreenButton,
+.bsdn_video_player .bsdn_repeatButton {
+    opacity: 0.9;
+    transition: opacity 0.12s;
+}
+.bsdn_video_player .bsdn_playButton:hover,
+.bsdn_video_player .bsdn_fullScreenButton:hover,
+.bsdn_video_player .bsdn_repeatButton:hover {
+    opacity: 1;
+}
+
+/* ===== 7. НИКАКИХ СИНИХ ХЕДЕРОВ ===== */
+/* Попапы: белый хедер (тёмная — #19191a), никакой синевы */
+.ovk-diag-head,
+.ovk-diag {
+    background: #ffffff !important;
+    color: #000000 !important;
+}
+.dark-mode .ovk-diag-head,
+.dark-mode .ovk-diag {
+    background: #19191a !important;
+    color: #ffffff !important;
+}
+/* Мобильная шапка: прозрачная поверх контента → белая (тёмная — тёмная) */
+.appbar:not(.appbar--transparent) {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+.appbar--transparent:not(.appbar--scrolled) {
+    background-color: transparent;
+}
+.dark-mode .appbar:not(.appbar--transparent) {
+    background-color: #19191a !important;
+    color: #ffffff !important;
+}
+/* appbar при скролле — белый/тёмный, не синий */
+.appbar.appbar--scrolled,
+.appbar.appbar--transparent.appbar--scrolled {
+    background-color: #ffffff !important;
+}
+.dark-mode .appbar.appbar--scrolled,
+.dark-mode .appbar.appbar--transparent.appbar--scrolled {
+    background-color: #19191a !important;
+    color: #ffffff !important;
+}
+/* Убираем синие гласные-переменные appbar (могут красить фон) */
+@media (max-width: 660px) {
+    .appbar {
+        --appbar-bg-alpha: 0 !important;
+    }
+    .appbar:not(.appbar--transparent):not(.appbar--scrolled) {
+        background-color: #ffffff !important;
+    }
+    .dark-mode .appbar:not(.appbar--transparent):not(.appbar--scrolled) {
+        background-color: #19191a !important;
+    }
+    /* синие иконки → чёрные/белые на мобилке */
+    .appbar .hamburger svg {
+        color: #000000;
+    }
+    .dark-mode .appbar .hamburger svg {
+        color: #ffffff;
+    }
+}
+
+/* ===== 8. МУЗЫКА на тёмной: кнопки белые ===== */
+.dark-mode .audioEmbed .play_btn,
+.dark-mode .bigPlayer .play_btn,
+.dark-mode .audio_row .play_btn,
+.dark-mode .player_btn,
+.dark-mode .bsdn_playButton,
+.dark-mode .bsdn_fullScreenButton,
+.dark-mode .bsdn_repeatButton,
+.dark-mode .audio-player-controls button,
+.dark-mode .player-controls button {
+    color: #ffffff !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+.dark-mode .audioEmbed .play_btn svg,
+.dark-mode .bigPlayer .play_btn svg,
+.dark-mode .player_btn svg path {
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
+}
+/* ===== 8. ХЕДЕР-ИКОНКИ: музыка/уведомления — 26px ===== */
+.home_navigation .top_nav_btn_icon {
+    background-color: #818c99;
+    -webkit-mask: url("../icons/svg/notification_outline_24.svg") center/contain no-repeat;
+    mask: url("../icons/svg/notification_outline_24.svg") center/contain no-repeat;
+    background-image: none;
+    width: 26px !important;
+    height: 26px !important;
+    margin: 11px auto !important;
+}
+.top_nav_btn#headerMusicBtn .top_nav_btn_icon {
+    -webkit-mask-image: url("../icons/svg/music_outline_24.svg");
+    mask-image: url("../icons/svg/music_outline_24.svg");
+}
+.home_navigation .top_nav_btn:hover .top_nav_btn_icon {
+    background-color: #3c3c3c;
+}
+.dark-mode .home_navigation .top_nav_btn_icon {
+    background-color: #ffffff;
+}
+.dark-mode .home_navigation .top_nav_btn:hover .top_nav_btn_icon {
+    background-color: #e1e3e6;
+}
+.top_nav_btn#headerMusicBtn:hover .top_nav_btn_icon,
+.shown .top_nav_btn#headerMusicBtn .top_nav_btn_icon,
+.top_nav_btn#top_notify_btn:hover .top_nav_btn_icon,
+.shown .top_nav_btn#top_notify_btn .top_nav_btn_icon,
+.top_nav_btn#top_notify_btn.has_notify .top_nav_btn_icon {
+    background-position: initial;
+}
+/* Плеер в шапке (прев/плей/next): 24px, по центру, работает с базой */
+.top_audio_player.top_audio_player_enabled,
+.top_nav_audio {
+    display: inline-flex !important;
+    align-items: center;
+    height: 48px;
+    vertical-align: middle;
+    max-width: 400px;
+    line-height: normal;
+}
+.top_audio_player .top_audio_player_btn {
+    float: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2px;
+    height: 48px;
+    margin: 0;
+    cursor: pointer;
+}
+.top_audio_player .top_audio_player_next {
+    margin-right: 0;
+}
+.top_audio_player .top_audio_player_title_wrap {
+    margin: 0 4px 0 6px;
+    line-height: normal;
+    align-self: center;
+}
+.top_audio_player .top_audio_player_btn > div {
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    background-image: none;
+    background-color: #818c99;
+    -webkit-mask: url("../icons/svg/play_24.svg") center/contain no-repeat;
+    mask: url("../icons/svg/play_24.svg") center/contain no-repeat;
+    opacity: 0.95;
+}
+.top_audio_player .top_audio_player_btn:hover > div {
+    background-color: #3c3c3c;
+    opacity: 1;
+}
+.dark-mode .top_audio_player .top_audio_player_btn > div {
+    background-color: #c4cace;
+}
+.dark-mode .top_audio_player .top_audio_player_btn:hover > div {
+    background-color: #e1e3e6;
+}
+.top_audio_player .top_audio_player_prev > div {
+    -webkit-mask-image: url("../icons/svg/skip_previous_24.svg");
+    mask-image: url("../icons/svg/skip_previous_24.svg");
+}
+.top_audio_player .top_audio_player_next > div {
+    -webkit-mask-image: url("../icons/svg/skip_next_24.svg");
+    mask-image: url("../icons/svg/skip_next_24.svg");
+}
+.top_audio_player.top_audio_player_playing .top_audio_player_play > div {
+    -webkit-mask-image: url("../icons/svg/pause_24.svg");
+    mask-image: url("../icons/svg/pause_24.svg");
+}
+
+/* ===== 8a/9. ПОИСК: единый блок — иконка по темам, прямоугольный с закруглением ===== */
+.page_header #search_box input[type="search"] {
+    background: #f0f2f5 url("../icons/svg/search_outline_24.svg") no-repeat !important;
+    background-position: 9px center !important;
+    background-size: 18px 18px !important;
+    border-radius: 10px !important;
+    height: 36px !important;
+}
+.dark-mode .page_header #search_box input[type="search"] {
+    background: #2c2d2e url("../icons/svg/search_outline_24_dark.svg") no-repeat !important;
+    background-position: 9px center !important;
+    background-size: 18px 18px !important;
+    border-radius: 10px !important;
+    height: 36px !important;
+    color: #ffffff !important;
+}
+
+/* ===== 10. ЮЗЕРНЕЙМ ВМЕСТО ИМЕНИ на мобилке ===== */
+@media (max-width: 660px) {
+    /* На профиле/группе: показываем username, имя скрыто */
+    .appbar-title {
+        display: none !important;
+    }
+    .appbar-username-wrap {
+        display: block !important;
+        position: static !important;
+        left: 56px;
+        padding: 0 12px;
+        font-size: 15px;
+        font-weight: 500;
+        color: #000000 !important;
+        text-shadow: none !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: calc(100vw - 130px);
+    }
+    .dark-mode .appbar-username-wrap {
+        color: #ffffff !important;
+    }
+    /* Тёмная тема: hero-имя тоже белое */
+    .dark-mode .mobile-hero-name {
+        color: #ffffff;
+    }
+}
+
+/* ===== 11. Логотип: светлая — ovklogoblack.png, тёмная — ovklogowhite.png, БОЛЬШЕ ===== */
+.home_button .home_button_bg {
+    background: url("../icons/ovklogoblack.png") center/contain no-repeat !important;
+    background-size: 130px auto !important;
+    width: 130px !important;
+    height: 40px !important;
+    margin: 2px 6px !important;
+}
+.dark-mode .home_button .home_button_bg {
+    background: url("../icons/ovklogowhite.png") center/contain no-repeat !important;
+}
+
+/* ===== 11b. БРЕНДИНГ ВКОНТАКТЕ (настройка): лого VK по теме, чуть больше ===== */
+body.vk-branding .home_button .home_button_bg {
+    background: url("../icons/vkblack.png") center/contain no-repeat !important;
+    background-size: 130px auto !important;
+    width: 130px !important;
+    height: 44px !important;
+}
+body.vk-branding.dark-mode .home_button .home_button_bg {
+    background: url("../icons/vkwhite.png") center/contain no-repeat !important;
+    background-size: 130px auto !important;
+    width: 130px !important;
+    height: 44px !important;
+}
+
+/* ===== 11c. РЕПОСТЫ: аватарки круглые ===== */
+.post.copy_quote .post-avatar,
+.copy_quote .post_image img,
+.copy_quote img.avatar {
+    border-radius: 50% !important;
+    object-fit: cover;
+}
+.home_button {
+    height: 48px;
+    display: flex;
+    align-items: center;
+}
+.ovkhat .home_button .home_button_bg {
+    background-position: center;
+}
+
+/* ===== 12. Тёмная тема: имя на странице БЕЛОЕ (фикс) ===== */
+.dark-mode .page_name,
+.dark-mode .page_name a,
+.dark-mode h2.page_name {
+    color: #ffffff !important;
+}
+.dark-mode .mobile-hero-name,
+.dark-mode .mobile-hero-name a {
+    color: #ffffff !important;
+}

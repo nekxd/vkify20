@@ -1,7 +1,7 @@
 // Build script for VKify16.
 //
 // Concatenates and minifies the themepack's modular JS (res/js/**) into a
-// single IIFE bundle at res/js/dist/vkify16.bundle.js.
+// single IIFE bundle at res/js/dist/vk2020.bundle.js.
 //
 // core/vkify.js is NOT bundled: it loads non-deferred in @layout.latte so
 // that synchronous consumers (core/settings-config.js and the inline
@@ -16,7 +16,7 @@ import fs from 'node:fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const jsRoot = path.join(__dirname, 'res', 'js');
-const outFile = path.join(jsRoot, 'dist', 'vkify16.bundle.js');
+const outFile = path.join(jsRoot, 'dist', 'vk2020.bundle.js');
 
 // Load order, relative to res/js/.
 const modules = [
@@ -64,7 +64,7 @@ const modules = [
 for (const rel of modules) {
     const abs = path.join(jsRoot, rel);
     if (!fs.existsSync(abs)) {
-        console.error(`[vkify16-build] Missing module: ${rel}`);
+        console.error(`[vk2020-build] Missing module: ${rel}`);
         process.exit(1);
     }
 }
@@ -120,11 +120,11 @@ const watch = process.argv.includes('--watch');
 if (watch) {
     const ctx = await esbuild.context(buildOptions);
     await ctx.watch();
-    console.log('[vkify16-build] Watching for changes...');
+    console.log('[vk2020-build] Watching for changes...');
 } else {
     const result = await esbuild.build(buildOptions);
     const file = result.outputFiles.find(f => f.path === outFile);
     if (file) {
-        console.log(`[vkify16-build] Wrote ${path.relative(__dirname, outFile)} (${(file.contents.length / 1024).toFixed(1)} KB)`);
+        console.log(`[vk2020-build] Wrote ${path.relative(__dirname, outFile)} (${(file.contents.length / 1024).toFixed(1)} KB)`);
     }
 }

@@ -1,0 +1,61 @@
+/* ============ 11. VK 2020 ПЛЕЕР (vkvideo-style) ============ */
+/* Круглая кнопка play на обложке трека, как в ВК */
+.audioEmbed .audioEntryWrapper .play_btn,
+.audioEmbed .play_btn,
+.bigPlayer .play_btn,
+.music_podcast .play_btn {
+    border-radius: 50%;
+    transition: background-color 0.12s, transform 0.12s;
+}
+.audioEmbed .play_btn:hover,
+.bigPlayer .play_btn:hover {
+    transform: scale(1.06);
+}
+
+/* Ползунок громкости/прогресса: синий акцент */
+.bigPlayer .bsdn_playProgress,
+.bigPlayer .progress,
+.audio_slider {
+    background-color: #0077ff !important;
+}
+.bigPlayer .bsdn_timeSlider,
+.bigPlayer .bsdn_volumeSlider {
+    border-radius: 3px;
+}
+
+/* Экран видео: скруглённые углы как vkvideo */
+.bsdn_video_player,
+.video_block_layout,
+.ovk-modal-video-window .page_block {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* ============ 12. МОБИЛЬНАЯ ВЕРСИЯ (m.vk.ru) ============ */
+@media (max-width: 660px) {
+    .appbar {
+        background: #ffffff;
+        border-bottom: 1px solid #e7e8ec;
+    }
+    .appbar-title {
+        font-weight: 600;
+        font-size: 15px;
+    }
+    .mobile-hero-img-wrap,
+    .mobile-hero-img {
+        border-radius: 0 0 16px 16px;
+    }
+    .mobile-hero-name {
+        font-weight: 600;
+    }
+    .button,
+    input[class="button"] {
+        border-radius: 10px;
+        width: 100%;
+    }
+    .page_block {
+        border: 0;
+        border-radius: 0;
+        margin-bottom: 8px;
+    }
+}
